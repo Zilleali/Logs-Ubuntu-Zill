@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/zille/simple-logs/venv/bin/python3
 """
 Simple log collector - saves basic system info to a JSON file
 This runs every time you want to collect logs

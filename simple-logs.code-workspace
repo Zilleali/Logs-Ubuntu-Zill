@@ -1,0 +1,92 @@
+{
+    "folders": [
+        {
+            "path": ".",
+            "name": "Simple Logs System"
+        }
+    ],
+    "settings": {
+        "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python3",
+        "python.terminal.activateEnvironment": true,
+        "python.analysis.autoImportCompletions": true,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.linting.pylintPath": "${workspaceFolder}/venv/bin/pylint",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "always"
+        },
+        "[python]": {
+            "editor.defaultFormatter": "ms-python.python",
+            "editor.formatOnSave": true,
+            "editor.tabSize": 4
+        },
+        "files.exclude": {
+            "**/__pycache__": true,
+            "**/*.pyc": true,
+            "venv": false,
+            ".git": true
+        },
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.env.linux": {
+            "VIRTUAL_ENV": "${workspaceFolder}/venv"
+        }
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Activate Venv",
+                "type": "shell",
+                "command": "source ${workspaceFolder}/venv/bin/activate",
+                "problemMatcher": []
+            },
+            {
+                "label": "Install Dependencies",
+                "type": "shell",
+                "command": "./install-deps.sh",
+                "group": "build"
+            },
+            {
+                "label": "Check Imports",
+                "type": "shell",
+                "command": "python3 check-imports.py",
+                "group": "test"
+            },
+            {
+                "label": "Start Dashboard",
+                "type": "shell",
+                "command": "python3 dashboard.py",
+                "isBackground": true,
+                "problemMatcher": []
+            },
+            {
+                "label": "Collect Logs",
+                "type": "shell",
+                "command": "python3 log-collector-enhanced.py",
+                "group": "build"
+            }
+        ]
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Python: Dashboard",
+                "type": "python",
+                "request": "launch",
+                "program": "dashboard.py",
+                "console": "integratedTerminal",
+                "justMyCode": true
+            },
+            {
+                "name": "Python: Collect Logs",
+                "type": "python",
+                "request": "launch",
+                "program": "log-collector-enhanced.py",
+                "console": "integratedTerminal"
+            }
+        ]
+    }
+}

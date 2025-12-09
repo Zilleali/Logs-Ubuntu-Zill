@@ -1,10 +1,23 @@
-#!/usr/bin/env python3
+#!/home/zille/simple-logs/venv/bin/python3
+import sys
+import os
+
 """
 Enhanced log collector with more system info
 """
 
 import json
 import os
+# Add user site-packages to path
+user_site = os.path.expanduser("~/.local/lib/python3.12/site-packages")
+if os.path.exists(user_site):
+    sys.path.append(user_site)
+
+# Add venv site-packages
+venv_site = os.path.join(os.path.dirname(__file__), "venv", "lib", "python3.12", "site-packages")
+if os.path.exists(venv_site):
+    sys.path.append(venv_site)
+
 import psutil
 import subprocess
 from datetime import datetime

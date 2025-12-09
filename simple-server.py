@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/zille/simple-logs/venv/bin/python3
 """
 Simple HTTP server for the dashboard
 """
