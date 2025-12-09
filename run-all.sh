@@ -8,7 +8,7 @@ echo "========================================"
 echo ""
 
 echo "🔄 Step 1: Collecting system logs..."
-python3 ~/simple-logs/log-collector.py
+python3 ~/simple-logs/log-collector-enhanced.py
 
 echo ""
 echo "📤 Step 2: Uploading to GitHub..."

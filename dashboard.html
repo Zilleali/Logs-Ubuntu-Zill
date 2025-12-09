@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Logs Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .recent-logs {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .log-entry {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border-left: 3px solid #28a745;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Simple Logs Dashboard</h1>
+            <p>Monitor your system logs locally</p>
+        </div>
+
+        <div class="controls">
+            <button onclick="collectLogs()">Collect Logs Now</button>
+            <button onclick="refreshDashboard()">Refresh Dashboard</button>
+            <button onclick="openLogFolder()">Open Log Folder</button>
+        </div>
+
+        <div class="stats-grid" id="stats">
+            <!-- Stats will be loaded here -->
+        </div>
+
+        <div class="recent-logs">
+            <h2>📁 Recent Log Files</h2>
+            <div id="recentFiles">
+                Loading...
+            </div>
+        </div>
+
+        <div class="recent-logs">
+            <h2>📈 Quick Stats</h2>
+            <div id="quickStats">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function collectLogs() {
+            try {
+                const response = await fetch('/api/collect');
+                const result = await response.json();
+                alert(result.message);
+                refreshDashboard();
+            } catch (error) {
+                alert('Error: ' + error);
+            }
+        }
+
+        async function refreshDashboard() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+
+                // Update stats grid
+                const statsHtml = `
+                    <div class="stat-card">
+                        <div>Total Logs</div>
+                        <div class="stat-value">${data.total_logs}</div>
+                        <div>files collected</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Today's Logs</div>
+                        <div class="stat-value">${data.today_logs}</div>
+                        <div>last 24 hours</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Last Update</div>
+                        <div class="stat-value">${data.last_update}</div>
+                        <div>time ago</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>GitHub Status</div>
+                        <div class="stat-value">${data.git_status}</div>
+                        <div>connection</div>
+                    </div>
+                `;
+                document.getElementById('stats').innerHTML = statsHtml;
+
+                // Update recent files
+                let filesHtml = '';
+                data.recent_files.forEach(file => {
+                    filesHtml += `<div class="log-entry">${file}</div>`;
+                });
+                document.getElementById('recentFiles').innerHTML = filesHtml || 'No logs found';
+
+                // Update quick stats
+                document.getElementById('quickStats').innerHTML = `
+                    <p>📁 Logs Directory: <code>~/simple-logs/daily/</code></p>
+                    <p>⏰ Next Auto-run: Every hour</p>
+                    <p>💾 Disk Usage: ${data.disk_usage}%</p>
+                    <p>🌐 GitHub Repo: <a href="https://github.com/Zilleali/Logs-Ubuntu-Zill" target="_blank">View on GitHub</a></p>
+                `;
+
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+
+        function openLogFolder() {
+            // This would open the logs folder
+            alert('Open terminal and run: cd ~/simple-logs/daily/ && ls -la');
+        }
+
+        // Start a simple Python HTTP server for the API
+        function startServer() {
+            fetch('/api/test')
+                .catch(() => {
+                    console.log('Starting local server...');
+                    // In a real implementation, you'd start a Python server here
+                });
+        }
+
+        // Initial load
+        refreshDashboard();
+        // Auto-refresh every 60 seconds
+        setInterval(refreshDashboard, 60000);
+    </script>
+</body>
+
+</html>
