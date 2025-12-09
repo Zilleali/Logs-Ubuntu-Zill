@@ -1,0 +1,10 @@
+[Unit]
+Description=Check for alerts every hour
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+RandomizedDelaySec=600
+
+[Install]
+WantedBy=timers.target

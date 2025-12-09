@@ -1,0 +1,10 @@
+[Unit]
+Description=Upload logs to GitHub
+
+[Service]
+Type=oneshot
+ExecStart=%h/simple-logs/git-upload.sh
+WorkingDirectory=%h/simple-logs
+
+[Install]
+WantedBy=default.target

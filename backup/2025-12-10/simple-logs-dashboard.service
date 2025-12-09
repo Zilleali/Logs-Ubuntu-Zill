@@ -1,0 +1,13 @@
+[Unit]
+Description=Simple Logs Dashboard
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 %h/simple-logs/dashboard.py
+WorkingDirectory=%h/simple-logs
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

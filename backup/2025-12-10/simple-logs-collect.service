@@ -1,0 +1,11 @@
+[Unit]
+Description=Simple Logs Collection Service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/simple-logs/log-collector-enhanced.py
+WorkingDirectory=%h/simple-logs
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=default.target

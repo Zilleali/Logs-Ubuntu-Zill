@@ -1,0 +1,20 @@
+{
+  "date": "2025-12-10",
+  "total_logs": 2,
+  "time_period": "2025-12-10 00:02:05 to 2025-12-10 00:12:57",
+  "cpu": {
+    "average": 19.1,
+    "max": 30.9,
+    "min": 7.4,
+    "trend": "\u2193"
+  },
+  "memory": {
+    "average": 43.7,
+    "max": 44.0,
+    "min": 43.4
+  },
+  "disk": {
+    "average": 26.8,
+    "current": 26.8
+  }
+}

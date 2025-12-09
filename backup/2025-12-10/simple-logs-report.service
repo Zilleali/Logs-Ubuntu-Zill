@@ -1,0 +1,11 @@
+[Unit]
+Description=Generate daily report
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/simple-logs/daily-report.py
+WorkingDirectory=%h/simple-logs
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=default.targe
