@@ -9,7 +9,8 @@ if [ ! -d ".git" ]; then
     echo "Initializing Git repository..."
     git init
     git config user.name "Simple Logger"
-    git config user.email "logger@simple"
+    # Use GitHub's private email
+    git config user.email "12345678+Zilleali@users.noreply.github.com"
     # Ignore the daily folder in Git (we'll add it manually)
     echo "daily/" > .gitignore
 fi
@@ -34,3 +35,4 @@ else
     echo "Pushing to GitHub..."
     git push origin main 2>/dev/null || git push origin master 2>/dev/null || echo "Push failed - check internet connection"
 fi
+UPLOADER
