@@ -1,0 +1,75 @@
+{
+  "system": {
+    "timestamp": "2025-12-10T08:39:30.726501",
+    "hostname": "ZILLEALI",
+    "system": "Linux",
+    "release": "6.14.0-36-generic",
+    "version": "#36~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Oct 15 15:45:17 UTC 2",
+    "machine": "x86_64",
+    "processor": "x86_64"
+  },
+  "resources": {
+    "cpu_percent": 71.5,
+    "cpu_count": 4,
+    "cpu_freq": 2993.0157499999996,
+    "memory_total_gb": 15.5,
+    "memory_used_gb": 0.49,
+    "memory_percent": 5.1,
+    "disk_total_gb": 438.01,
+    "disk_used_gb": 111.88,
+    "disk_percent": 26.9
+  },
+  "users": {
+    "logged_in_users": [
+      "zille"
+    ],
+    "total_processes": 192,
+    "top_processes": [
+      {
+        "pid": 1,
+        "name": "systemd",
+        "cpu": 0.0
+      },
+      {
+        "pid": 2,
+        "name": "kthreadd",
+        "cpu": 0.0
+      },
+      {
+        "pid": 3,
+        "name": "pool_workqueue_release",
+        "cpu": 0.0
+      },
+      {
+        "pid": 4,
+        "name": "kworker/R-rcu_gp",
+        "cpu": 0.0
+      },
+      {
+        "pid": 5,
+        "name": "kworker/R-sync_wq",
+        "cpu": 0.0
+      }
+    ]
+  },
+  "network": {
+    "ip_address": "127.0.1.1",
+    "network_connections": 11,
+    "bytes_sent_mb": 0.01,
+    "bytes_recv_mb": 0.01
+  },
+  "events": {
+    "recent_logins": [
+      "zille    seat0        login screen     Wed Dec 10 08:39   still logged in",
+      "reboot   system boot  6.14.0-36-generi Wed Dec 10 08:39   still running",
+      "zille    :0           :0               Tue Dec  9 10:16 - 02:19  (16:03)",
+      "zille    seat0        login screen     Tue Dec  9 10:16 - down   (16:04)",
+      "reboot   system boot  6.14.0-36-generi Tue Dec  9 10:15 - 02:20  (16:04)",
+      "",
+      "wtmp begins Fri Dec  5 16:36:26 2025"
+    ],
+    "uptime": "up 0 minutes",
+    "current_datetime": "Wed Dec 10 08:39:31 AM PKT 2025"
+  },
+  "collection_time": "2025-12-10 08:39:31"
+}
