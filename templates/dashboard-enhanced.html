@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced System Dashboard</title>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { background: rgba(255, 255, 255, 0.95); padding: 2rem; border-radius: 15px; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .header h1 { font-size: 2.5rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .stat-value { font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0; }
+        .chart-container { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); margin-bottom: 2rem; height: 400px; }
+        .connection-status { position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; border-radius: 20px; font-weight: bold; }
+        .connected { background: #10b981; color: white; }
+        .disconnected { background: #ef4444; color: white; }
+        .real-time-badge { position: absolute; top: 10px; right: 10px; background: #3b82f6; color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Enhanced System Dashboard</h1>
+            <p>Real-time monitoring with WebSocket updates</p>
+            <div class="real-time-badge">LIVE</div>
+        </div>
+        
+        <div class="stats-grid" id="statsGrid">
+            <!-- Stats will be populated by JavaScript -->
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="cpuChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="memoryChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="connection-status" id="connectionStatus"></div>
+    
+    <script>
+        // Connect to WebSocket server
+        const socket = io();
+        const connectionStatus = document.getElementById('connectionStatus');
+        
+        // Charts
+        let cpuChart, memoryChart;
+        let cpuData = [], memoryData = [], timeLabels = [];
+        
+        // Update connection status
+        socket.on('connect', () => {
+            connectionStatus.className = 'connection-status connected';
+            connectionStatus.textContent = 'Connected ✅';
+            socket.emit('request_update', {});
+        });
+        
+        socket.on('disconnect', () => {
+            connectionStatus.className = 'connection-status disconnected';
+            connectionStatus.textContent = 'Disconnected ❌';
+        });
+        
+        // Handle real-time updates
+        socket.on('real_time_update', (data) => {
+            updateDashboard(data);
+        });
+        
+        function updateDashboard(data) {
+            // Update stats grid
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card">
+                    <h3>CPU Usage</h3>
+                    <div class="stat-value" style="color: ${getColor(data.cpu.percent)}">
+                        ${data.cpu.percent.toFixed(1)}%
+                    </div>
+                    <p>${data.cpu.cores} cores</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Memory</h3>
+                    <div class="stat-value" style="color: ${getColor(data.memory.percent)}">
+                        ${data.memory.percent.toFixed(1)}%
+                    </div>
+                    <p>${data.memory.used_gb.toFixed(1)} GB / ${data.memory.total_gb.toFixed(1)} GB</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Disk Space</h3>
+                    <div class="stat-value" style="color: ${getColor(data.disk.percent)}">
+                        ${data.disk.percent.toFixed(1)}%
+                    </div>
+                    <p>${data.disk.free_gb.toFixed(1)} GB free</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Network</h3>
+                    <div class="stat-value">
+                        ${data.network.connections}
+                    </div>
+                    <p>Connections active</p>
+                </div>
+            `;
+            
+            // Update charts
+            updateCharts(data);
+        }
+        
+        function updateCharts(data) {
+            const now = new Date().toLocaleTimeString();
+            
+            // Add new data point
+            cpuData.push(data.cpu.percent);
+            memoryData.push(data.memory.percent);
+            timeLabels.push(now);
+            
+            // Keep last 20 points
+            if (cpuData.length > 20) {
+                cpuData.shift();
+                memoryData.shift();
+                timeLabels.shift();
+            }
+            
+            // Initialize or update charts
+            if (!cpuChart) {
+                initCharts();
+            } else {
+                cpuChart.update();
+                memoryChart.update();
+            }
+        }
+        
+        function initCharts() {
+            const ctx1 = document.getElementById('cpuChart').getContext('2d');
+            const ctx2 = document.getElementById('memoryChart').getContext('2d');
+            
+            cpuChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: timeLabels,
+                    datasets: [{
+                        label: 'CPU Usage %',
+                        data: cpuData,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            memoryChart = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: timeLabels,
+                    datasets: [{
+                        label: 'Memory Usage %',
+                        data: memoryData,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+        
+        function getColor(value) {
+            if (value < 50) return '#10b981';
+            if (value < 80) return '#f59e0b';
+            return '#ef4444';
+        }
+        
+        // Initial load
+        fetch('/api/real-time-data')
+            .then(res => res.json())
+            .then(data => updateDashboard(data));
+    </script>
+</body>
+</html>
