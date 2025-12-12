@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-12-12T08:56:51.377766",
+  "alerts": [
+    "\u26a0\ufe0f HIGH CPU USAGE: 89.7%",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 81.0\u00b0C"
+  ],
+  "system": {
+    "cpu": 100.0,
+    "memory": 5.2,
+    "disk": 27.8
+  }
+}
