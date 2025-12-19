@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-12-19T21:04:56.976917",
+  "alerts": [
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 96.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 96.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 87.0\u00b0C"
+  ],
+  "system": {
+    "cpu": 80.0,
+    "memory": 61.8,
+    "disk": 27.8
+  }
+}
