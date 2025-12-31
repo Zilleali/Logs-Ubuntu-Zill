@@ -1,0 +1,15 @@
+{
+  "timestamp": "2025-12-31T15:00:32.036239",
+  "alerts": [
+    "\ud83c\udf21\ufe0f HIGH TEMP acpitz: 90.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP thinkpad: 90.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 95.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 94.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 87.0\u00b0C"
+  ],
+  "system": {
+    "cpu": 84.0,
+    "memory": 64.4,
+    "disk": 30.6
+  }
+}
