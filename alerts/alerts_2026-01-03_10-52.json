@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-01-03T10:52:18.231350",
+  "alerts": [
+    "\u26a0\ufe0f HIGH CPU USAGE: 98.7%",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 95.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 95.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 82.0\u00b0C"
+  ],
+  "system": {
+    "cpu": 85.7,
+    "memory": 11.7,
+    "disk": 31.7
+  }
+}
