@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-01-06T15:09:14.708342",
+  "alerts": [
+    "\u26a0\ufe0f HIGH CPU USAGE: 80.1%",
+    "\ud83c\udf21\ufe0f HIGH TEMP acpitz: 91.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP thinkpad: 91.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 93.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 90.0\u00b0C",
+    "\ud83c\udf21\ufe0f HIGH TEMP coretemp: 83.0\u00b0C"
+  ],
+  "system": {
+    "cpu": 71.4,
+    "memory": 55.0,
+    "disk": 31.8
+  }
+}
