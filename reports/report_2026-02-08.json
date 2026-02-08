@@ -1,0 +1,20 @@
+{
+  "date": "2026-02-08",
+  "total_logs": 1,
+  "time_period": "2026-02-08 16:05:56 to 2026-02-08 16:05:56",
+  "cpu": {
+    "average": 3.2,
+    "max": 3.2,
+    "min": 3.2,
+    "trend": "\u2193"
+  },
+  "memory": {
+    "average": 21.6,
+    "max": 21.6,
+    "min": 21.6
+  },
+  "disk": {
+    "average": 33.7,
+    "current": 33.7
+  }
+}
